@@ -12,10 +12,10 @@
             <ToolBar DockPanel.Dock="Top">
                 <Menu>
                     <MenuItem Header="Open" Command="{Binding OpenCommand}"/>
+                    <MenuItem Header="Save" Command="{Binding SaveCommand}"/>
                 </Menu>
             </ToolBar>
-            <DataGrid HorizontalAlignment="Left" Height="399" Margin="10,10,0,0"
-                      VerticalAlignment="Top" Width="772" ItemsSource="{Binding Data}"/>
+            <DataGrid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,10" ItemsSource="{Binding Data}" />
         </DockPanel>
     </Grid>
 </Window>
