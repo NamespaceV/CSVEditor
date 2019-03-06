@@ -3,10 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CSVEditor"
+        xmlns:local="clr-namespace:CSVEditor.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        d:DataContext="{d:DesignInstance local:MainWindowViewModel, IsDesignTimeCreatable=True}"
+        Title="CSV Editor" Height="450" Width="800">
     <Grid>
-        
+        <DockPanel>
+            <ToolBar DockPanel.Dock="Top">
+                <Menu>
+                    <MenuItem Header="Open" Command="{Binding OpenCommand}"/>
+                </Menu>
+            </ToolBar>
+            <DataGrid HorizontalAlignment="Left" Height="399" Margin="10,10,0,0"
+                      VerticalAlignment="Top" Width="772" ItemsSource="{Binding Data}"/>
+        </DockPanel>
     </Grid>
 </Window>

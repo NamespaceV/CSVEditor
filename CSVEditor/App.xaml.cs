@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Ninject;
 using System.Windows;
 
 namespace CSVEditor
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            Current.MainWindow = Configure.NinjectKernel.Get<MainWindow>();
+            Current.MainWindow.Show();
+        }
     }
 }
