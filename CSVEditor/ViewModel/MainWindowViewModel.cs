@@ -1,7 +1,6 @@
 ﻿using CSVEditor.Commands;
 using CsvHelper;
 using Microsoft.Win32;
-using System;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
@@ -17,6 +16,13 @@ namespace CSVEditor.ViewModel
 
         private string _defaultPath = @"F:\ProjectCsv\DataExamples\enemies.csv";
         private string _savePath;
+        private CsvHelper.Configuration.Configuration _csvConfig =
+            new CsvHelper.Configuration.Configuration()
+        {
+            Delimiter = ",",
+            IgnoreBlankLines = false
+        };
+
 
         public DataTable Data => _data;
 
@@ -53,12 +59,9 @@ namespace CSVEditor.ViewModel
             _savePath = path;
 
             _data = new DataTable();
-            var config = new CsvHelper.Configuration.Configuration() {
-                Delimiter = ","
-            };
 
             using (var reader = new StreamReader(path))
-            using (var csv = new CsvReader(reader, config))
+            using (var csv = new CsvReader(reader, _csvConfig))
             {
                 csv.Read();
                 csv.ReadHeader();
@@ -86,28 +89,23 @@ namespace CSVEditor.ViewModel
             {
                 return;
             }
-            var config = new CsvHelper.Configuration.Configuration()
-            {
-                Delimiter = ","
-            };
 
             using (var write = new StreamWriter(_savePath))
-            using (var csv = new CsvWriter(write, config))
+            using (var csv = new CsvWriter(write, _csvConfig))
             {
                 var header = _data.Columns.Cast<DataColumn>().ToList();
                 foreach (var hearedCol in header)
                 {
                     csv.WriteField(new DataColumn(hearedCol.ColumnName));
                 }
-                csv.NextRecord();
                 foreach (var row in _data.AsEnumerable())
                 {
+                    csv.NextRecord();
                     var dataRow = _data.NewRow();
                     foreach (var column in header)
                     {
                         csv.WriteField(row[column].ToString());
                     }
-                    csv.NextRecord();
                 }
             }
 
